@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-const fetchDerivativeData = async (symbol, timeFrame) => {
+const fetchDerivativeData = async (symbol, timeFrame, resolution) => {
   // This is a mock function. In a real application, you would call an actual API.
   const mockData = Array.from({ length: 30 }, (_, i) => ({
     date: new Date(Date.now() - (29 - i) * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
@@ -18,10 +18,11 @@ const fetchDerivativeData = async (symbol, timeFrame) => {
 const DerivativeComparison = () => {
   const [symbol, setSymbol] = useState('');
   const [timeFrame, setTimeFrame] = useState('1M');
+  const [resolution, setResolution] = useState('daily');
 
   const { data, error, isLoading, refetch } = useQuery({
-    queryKey: ['derivativeData', symbol, timeFrame],
-    queryFn: () => fetchDerivativeData(symbol, timeFrame),
+    queryKey: ['derivativeData', symbol, timeFrame, resolution],
+    queryFn: () => fetchDerivativeData(symbol, timeFrame, resolution),
     enabled: false,
   });
 
@@ -57,6 +58,16 @@ const DerivativeComparison = () => {
                 <SelectItem value="1M">1 Month</SelectItem>
                 <SelectItem value="3M">3 Months</SelectItem>
                 <SelectItem value="1Y">1 Year</SelectItem>
+              </SelectContent>
+            </Select>
+            <Select value={resolution} onValueChange={setResolution}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Select resolution" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="daily">Daily</SelectItem>
+                <SelectItem value="weekly">Weekly</SelectItem>
+                <SelectItem value="monthly">Monthly</SelectItem>
               </SelectContent>
             </Select>
             <Button onClick={handleFetchData} disabled={isLoading || !symbol}>
