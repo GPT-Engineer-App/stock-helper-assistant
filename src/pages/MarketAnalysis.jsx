@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { subscribeToPushNotifications, requestNotificationPermission } from '../utils/pushNotifications';
 
 const fetchMarketData = async (symbol) => {
   const response = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${symbol}&apikey=${import.meta.env.VITE_ALPHA_VANTAGE_API_KEY}`);
@@ -35,6 +36,12 @@ const MarketAnalysis = () => {
       setChartData(formattedData);
     }
   }, [data]);
+
+  useEffect(() => {
+    requestNotificationPermission()
+      .then(() => subscribeToPushNotifications())
+      .catch(console.error);
+  }, []);
 
   const handleSymbolChange = (e) => {
     setSymbol(e.target.value.toUpperCase());
