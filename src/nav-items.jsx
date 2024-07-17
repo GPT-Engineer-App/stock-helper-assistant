@@ -1,6 +1,9 @@
-import { Home, TrendingUp } from "lucide-react";
+import { Home, TrendingUp, BarChart2, PieChart, RefreshCw } from "lucide-react";
 import Index from "./pages/Index.jsx";
 import MarketAnalysis from "./pages/MarketAnalysis.jsx";
+import RiskAssessment from "./pages/RiskAssessment.jsx";
+import PortfolioDashboard from "./pages/PortfolioDashboard.jsx";
+import AutomatedRebalancing from "./pages/AutomatedRebalancing.jsx";
 
 /**
  * Central place for defining the navigation items. Used for navigation components and routing.
@@ -17,5 +20,23 @@ export const navItems = [
     to: "/market-analysis",
     icon: <TrendingUp className="h-4 w-4" />,
     page: <MarketAnalysis />,
+  },
+  {
+    title: "Risk Assessment",
+    to: "/risk-assessment",
+    icon: <BarChart2 className="h-4 w-4" />,
+    page: <RiskAssessment />,
+  },
+  {
+    title: "Portfolio Dashboard",
+    to: "/portfolio-dashboard",
+    icon: <PieChart className="h-4 w-4" />,
+    page: <PortfolioDashboard />,
+  },
+  {
+    title: "Automated Rebalancing",
+    to: "/automated-rebalancing",
+    icon: <RefreshCw className="h-4 w-4" />,
+    page: <AutomatedRebalancing />,
   },
 ];
